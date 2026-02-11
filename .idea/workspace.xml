@@ -5,36 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="285c9ede-1483-4903-9ad9-2ab7fa29fb7d" name="更改" comment="add EnhancedTextRecognizer -- 26/02/05">
-      <change afterPath="$PROJECT_DIR$/src/core/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/detectors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/ocr_core.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/recognizers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modes/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modes/image_mode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modes/realtime_mode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/run_cli.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/run_gui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test_basic.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/cli.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/gui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/file_io.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/performance.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/visualization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/camera/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/camera/camera_manager.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/detector/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/detector/enhanced_text_recognizer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/detector/text_detector.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/detector/text_recognizer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/default_config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processor/frame_processor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/display_manager.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/helpers.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="enhanced_text" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -65,17 +36,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.gui.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.run_cli.executor": "Run",
-    "Python.run_gui.executor": "Run",
-    "Python.test_basic.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.gui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_cli.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_gui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_basic.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Python.main">
+}</component>
+  <component name="RunManager" selected="Python.run_gui">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="real_time_ocr" />
       <option name="ENV_FILES" value="" />
@@ -144,8 +115,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.run_gui" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.test_basic" />
       </list>
     </recent_temporary>
