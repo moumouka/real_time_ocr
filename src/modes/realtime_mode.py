@@ -25,7 +25,13 @@ class RealTimeProcessor:
         # 摄像头相关
         self.cap = None
         self.is_running = False
-        self.current_frame = None
+
+        # 显示相关
+        self.target_display_size = (800, 600)  # 默认显示尺寸
+        self.maintain_aspect_ratio = True
+        self.display_fps = 0
+        self.last_display_time = time.time()
+        self.display_frame_count = 0
 
         # 多线程处理
         self.capture_thread = None
@@ -53,49 +59,6 @@ class RealTimeProcessor:
         # 控制变量
         self.last_process_time = 0
         self.processing_active = True
-
-    def start_camera(self, camera_id: int = None) -> bool:
-        """启动摄像头 - 使用多线程架构"""
-        if camera_id is None:
-            camera_id = self.config.camera_id
-
-        try:
-            # 初始化摄像头
-            self.cap = cv2.VideoCapture(camera_id)
-
-            # 设置分辨率
-            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.config.frame_width)
-            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.config.frame_height)
-            self.cap.set(cv2.CAP_PROP_FPS, self.config.fps)
-
-            if not self.cap.isOpened():
-                raise RuntimeError(f"无法打开摄像头 {camera_id}")
-
-            # 启动标志
-            self.is_running = True
-            self.processing_active = True
-
-            # 启动捕获线程
-            self.capture_thread = threading.Thread(target=self._capture_frames)
-            self.capture_thread.daemon = True
-            self.capture_thread.start()
-
-            # 启动处理线程
-            self.processing_thread = threading.Thread(target=self._process_frames)
-            self.processing_thread.daemon = True
-            self.processing_thread.start()
-
-            # 启动显示线程（可选）
-            self.display_thread = threading.Thread(target=self._display_loop)
-            self.display_thread.daemon = True
-            self.display_thread.start()
-
-            logger.info(f"摄像头 {camera_id} 启动成功")
-            return True
-
-        except Exception as e:
-            logger.error(f"启动摄像头失败: {e}")
-            return False
 
     def _capture_frames(self):
         """捕获帧的线程函数 - 独立运行"""
@@ -308,3 +271,181 @@ class RealTimeProcessor:
             'frames_processed': self.processed_frame_count,
             'queue_size': self.frame_queue.qsize()
         }
+
+    def start_camera(self, camera_id: int = None) -> bool:
+        """启动摄像头"""
+        if camera_id is None:
+            camera_id = self.config.camera_id
+
+        try:
+            self.cap = cv2.VideoCapture(camera_id)
+
+            # 尝试获取摄像头支持的最大分辨率
+            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)  # 尝试设置高分辨率
+            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+
+            # 获取实际设置的分辨率
+            actual_width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            actual_height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+            logger.info(f"摄像头分辨率: {actual_width}x{actual_height}")
+
+            # 设置帧率
+            self.cap.set(cv2.CAP_PROP_FPS, self.config.fps)
+
+            if not self.cap.isOpened():
+                raise RuntimeError(f"无法打开摄像头 {camera_id}")
+
+            self.is_running = True
+
+            # 启动处理线程
+            self.processing_thread = threading.Thread(target=self._process_frames)
+            self.processing_thread.daemon = True
+            self.processing_thread.start()
+
+            logger.info(f"摄像头 {camera_id} 启动成功")
+            return True
+
+        except Exception as e:
+            logger.error(f"启动摄像头失败: {e}")
+            return False
+
+    def set_display_size(self, width: int, height: int):
+        """设置显示尺寸"""
+        self.target_display_size = (width, height)
+        logger.info(f"设置显示尺寸: {width}x{height}")
+
+    def _process_frames(self):
+        """处理帧的线程函数"""
+        last_process_time = 0
+
+        while self.is_running and self.cap and self.cap.isOpened():
+            try:
+                current_time = time.time()
+
+                # 控制处理频率
+                if current_time - last_process_time < self.config.process_interval:
+                    time.sleep(0.001)
+                    continue
+
+                # 捕获帧
+                ret, frame = self.cap.read()
+                if not ret:
+                    logger.warning("无法从摄像头读取帧")
+                    time.sleep(0.01)
+                    continue
+
+                # 自适应调整帧大小
+                display_frame = self._prepare_display_frame(frame)
+
+                # OCR处理
+                results = []
+                if self.config.realtime_processing:
+                    # 为了性能，只在需要时处理OCR
+                    boxes, detection_method = self.ocr_core.detect_text(frame)
+
+                    # 调整边界框坐标到显示尺寸
+                    if boxes:
+                        adjusted_boxes = self._adjust_boxes_to_display(boxes, frame.shape, display_frame.shape)
+                        results = self.ocr_core.recognize_text(frame, adjusted_boxes, detection_method)
+
+                # 在显示帧上绘制结果
+                if results:
+                    display_frame = self.ocr_core.draw_results(display_frame, results)
+
+                # 添加性能信息
+                display_frame = self._add_performance_overlay(display_frame)
+
+                # 更新当前帧
+                self.current_frame = display_frame
+
+                # 回调通知
+                if self.on_frame_callback:
+                    self.on_frame_callback(display_frame)
+
+                if self.on_result_callback and results:
+                    self.on_result_callback(results)
+
+                # 更新显示FPS
+                self._update_display_fps()
+
+                last_process_time = current_time
+
+            except Exception as e:
+                logger.error(f"处理帧时出错: {e}")
+                time.sleep(0.01)
+
+    def _prepare_display_frame(self, frame):
+        """准备用于显示的帧 - 自适应调整大小"""
+        frame_height, frame_width = frame.shape[:2]
+        target_width, target_height = self.target_display_size
+
+        # 计算缩放比例
+        width_scale = target_width / frame_width
+        height_scale = target_height / frame_height
+
+        if self.maintain_aspect_ratio:
+            # 保持宽高比
+            scale = min(width_scale, height_scale)
+            new_width = int(frame_width * scale)
+            new_height = int(frame_height * scale)
+        else:
+            # 拉伸到目标尺寸
+            new_width = target_width
+            new_height = target_height
+
+        # 调整大小
+        if new_width != frame_width or new_height != frame_height:
+            resized_frame = cv2.resize(frame, (new_width, new_height))
+        else:
+            resized_frame = frame
+
+        return resized_frame
+
+    def _adjust_boxes_to_display(self, boxes, original_shape, display_shape):
+        """调整边界框坐标到显示尺寸"""
+        original_height, original_width = original_shape[:2]
+        display_height, display_width = display_shape[:2]
+
+        width_scale = display_width / original_width
+        height_scale = display_height / original_height
+
+        adjusted_boxes = []
+        for box in boxes:
+            x1, y1, x2, y2 = box
+            adjusted_box = [
+                int(x1 * width_scale),
+                int(y1 * height_scale),
+                int(x2 * width_scale),
+                int(y2 * height_scale)
+            ]
+            adjusted_boxes.append(adjusted_box)
+
+        return adjusted_boxes
+
+    def _add_performance_overlay(self, frame):
+        """添加性能信息覆盖层"""
+        overlay = frame.copy()
+
+        # 添加FPS显示
+        cv2.putText(overlay, f"FPS: {self.display_fps:.1f}",
+                    (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+                    (0, 255, 0), 2)
+
+        # 添加分辨率信息
+        height, width = frame.shape[:2]
+        cv2.putText(overlay, f"分辨率: {width}x{height}",
+                    (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
+                    (0, 255, 255), 2)
+
+        return overlay
+
+    def _update_display_fps(self):
+        """更新显示FPS"""
+        self.display_frame_count += 1
+        current_time = time.time()
+
+        if current_time - self.last_display_time >= 1.0:
+            self.display_fps = self.display_frame_count / (current_time - self.last_display_time)
+            self.display_frame_count = 0
+            self.last_display_time = current_time

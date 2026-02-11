@@ -4,37 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="285c9ede-1483-4903-9ad9-2ab7fa29fb7d" name="更改" comment="add EnhancedTextRecognizer -- 26/02/05">
-      <change afterPath="$PROJECT_DIR$/src/core/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/detectors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/ocr_core.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/recognizers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modes/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modes/image_mode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modes/realtime_mode.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/run_cli.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/run_gui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test_basic.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/cli.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/gui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/file_io.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/performance.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/visualization.py" afterDir="false" />
+    <list default="true" id="285c9ede-1483-4903-9ad9-2ab7fa29fb7d" name="更改" comment="fixed realtime recognize -- 26/02/11">
+      <change afterPath="$PROJECT_DIR$/src/utils/camera_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/display_adapter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/camera/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/camera/camera_manager.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/detector/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/detector/enhanced_text_recognizer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/detector/text_detector.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/detector/text_recognizer.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/default_config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processor/frame_processor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/display_manager.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/helpers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modes/realtime_mode.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modes/realtime_mode.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/run_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run_gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/gui.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,17 +42,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.gui.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.run_cli.executor": "Run",
-    "Python.run_gui.executor": "Run",
-    "Python.test_basic.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.gui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_cli.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_gui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_basic.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Python.main">
+}</component>
+  <component name="RunManager" selected="Python.run_gui">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="real_time_ocr" />
       <option name="ENV_FILES" value="" />
@@ -144,8 +121,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.run_gui" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.test_basic" />
       </list>
     </recent_temporary>
@@ -166,6 +143,19 @@
       <option name="presentableId" value="Default" />
       <updated>1770187493188</updated>
     </task>
+    <task id="LOCAL-00001" summary="fixed realtime recognize -- 26/02/11">
+      <option name="closed" value="true" />
+      <created>1770789256133</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1770789256133</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixed realtime recognize -- 26/02/11" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed realtime recognize -- 26/02/11" />
   </component>
 </project>
