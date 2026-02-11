@@ -1,0 +1,34 @@
+# 通用设置
+use_yolo_first: true
+fallback_enabled: true
+confidence_threshold: 0.4
+nms_iou_threshold: 0.5
+use_gpu: false
+languages:
+  - ch_sim
+  - en
+min_text_area: 100
+max_text_area: 100000
+debug_mode: false
+output_dir: "outputs"
+
+# 实时模式设置
+camera_id: 0
+frame_width: 1280
+frame_height: 720
+fps: 30
+show_fps: true
+show_confidence: true
+show_detection_source: true
+realtime_processing: true
+process_interval: 0.05
+max_queue_size: 30
+
+# 显示设置
+box_color_yolo: [0, 255, 0]      # 绿色
+box_color_traditional: [255, 0, 0]  # 蓝色
+box_thickness: 2
+text_color: [255, 255, 255]      # 白色
+text_background: [0, 0, 0]       # 黑色
+text_size: 0.5
+text_thickness: 1
