@@ -199,7 +199,7 @@ class TraditionalTextDetector(BaseDetector):
 class YOLOTextDetector(BaseDetector):
     """YOLO文本检测器"""
 
-    def __init__(self, config: SystemConfig, model_path: str = 'models/yolo26l.pt'):
+    def __init__(self, config: SystemConfig, model_path: str = 'models/yolo26n.pt'):
         super().__init__(config)
         self.model_path = model_path
         self.model = None

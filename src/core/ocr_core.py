@@ -117,10 +117,14 @@ class OCRCore:
 
         return recognition_results
 
-    def process_image(self, image: np.ndarray) -> List[OCRResult]:
-        """处理单张图片"""
+    def process_image(self, image: np.ndarray, confidence_threshold: float = None) -> List[OCRResult]:
+        """处理单张图片 - 支持置信度过滤"""
         start_time = time.time()
         self.stats.total_images += 1
+
+        # 使用传入的阈值或配置的阈值
+        if confidence_threshold is None:
+            confidence_threshold = self.config.confidence_threshold
 
         # 文本检测
         boxes, detection_method = self.detect_text(image)
@@ -131,13 +135,18 @@ class OCRCore:
         # 文本识别
         results = self.recognize_text(image, boxes, detection_method)
 
+        # 过滤低置信度的结果
+        filtered_results = [r for r in results if r.confidence >= confidence_threshold]
+
         # 更新统计
         processing_time = time.time() - start_time
         self.stats.total_time += processing_time
 
-        logger.info(f"图片处理完成，耗时: {processing_time:.2f}秒，识别到 {len(results)} 个文本")
+        logger.info(f"图片处理完成，耗时: {processing_time:.2f}秒，"
+                    f"识别到 {len(results)} 个文本，"
+                    f"过滤后 {len(filtered_results)} 个文本 (阈值: {confidence_threshold:.2f})")
 
-        return results
+        return filtered_results
 
     def draw_results(self, frame: np.ndarray, results: List[OCRResult]) -> np.ndarray:
         """在图像上绘制识别结果"""

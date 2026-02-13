@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="285c9ede-1483-4903-9ad9-2ab7fa29fb7d" name="更改" comment="fixed realtime recognize -- 26/02/11">
-      <change afterPath="$PROJECT_DIR$/src/utils/camera_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/display_adapter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/quick_start_realtime.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test_realtime_recognition.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modes/realtime_mode.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modes/realtime_mode.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/run_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run_gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/detectors.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/detectors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/ocr_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/ocr_core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modes/image_mode.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modes/image_mode.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/gui.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,12 +46,18 @@
   &quot;keyToString&quot;: {
     &quot;Python.gui.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.quick_start_realtime.executor&quot;: &quot;Run&quot;,
     &quot;Python.run_cli.executor&quot;: &quot;Run&quot;,
     &quot;Python.run_gui.executor&quot;: &quot;Run&quot;,
     &quot;Python.test_basic.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\imp\PycharmProjects\real_time_ocr\src" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.run_gui">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="real_time_ocr" />

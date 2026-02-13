@@ -20,8 +20,9 @@ class ImageProcessor:
         self.ocr_core = ocr_core
         self.config = ocr_core.config
 
-    def process_single_image(self, image_path: str, save_results: bool = True) -> List[OCRResult]:
-        """处理单张图片"""
+    def process_single_image(self, image_path: str, save_results: bool = True,
+                             confidence_threshold: float = None) -> List[OCRResult]:
+        """处理单张图片 - 支持置信度过滤"""
         try:
             # 读取图片
             image = cv2.imread(image_path)
@@ -31,12 +32,12 @@ class ImageProcessor:
 
             logger.info(f"处理图片: {image_path}")
 
-            # OCR处理
-            results = self.ocr_core.process_image(image)
+            # OCR处理 - 传入置信度阈值
+            results = self.ocr_core.process_image(image, confidence_threshold)
 
             # 保存结果
             if save_results:
-                self._save_results(image_path, image, results)
+                self._save_results(image_path, image, results, confidence_threshold)
 
             logger.info(f"完成处理，识别到 {len(results)} 个文本")
             return results
@@ -62,10 +63,14 @@ class ImageProcessor:
 
         return all_results
 
-    def _save_results(self, image_path: str, image: any, results: List[OCRResult]):
-        """保存单张图片的结果"""
+    def _save_results(self, image_path: str, image: any, results: List[OCRResult],
+                      confidence_threshold: float = None):
+        """保存单张图片的结果 - 包含置信度信息"""
         import json
         from datetime import datetime
+
+        if confidence_threshold is None:
+            confidence_threshold = self.config.confidence_threshold
 
         img_name = Path(image_path).stem
 
@@ -77,6 +82,7 @@ class ImageProcessor:
         with open(txt_path, 'w', encoding='utf-8') as f:
             f.write(f"图像: {image_path}\n")
             f.write(f"检测时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write(f"置信度阈值: {confidence_threshold:.2f}\n")
             f.write(f"检测到 {len(results)} 个文本区域\n")
             f.write("=" * 50 + "\n\n")
 
@@ -93,6 +99,7 @@ class ImageProcessor:
         results_dict = {
             'image_path': image_path,
             'timestamp': datetime.now().isoformat(),
+            'confidence_threshold': confidence_threshold,
             'results': [
                 {
                     'text': r.text,
@@ -121,4 +128,3 @@ class ImageProcessor:
         vis_path = os.path.join(self.config.output_dir, f"{img_name}_visualized.jpg")
         cv2.imwrite(vis_path, display_frame)
         logger.info(f"可视化结果已保存: {vis_path}")
-        
